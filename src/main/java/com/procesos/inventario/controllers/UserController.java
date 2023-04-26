@@ -3,9 +3,12 @@ package com.procesos.inventario.controllers;
 import com.procesos.inventario.models.User;
 import com.procesos.inventario.services.UserServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 public class UserController {
@@ -61,5 +64,17 @@ public class UserController {
         response.put("status", "400");
         response.put("message", "error updating user");
         return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
+    }
+    @PostMapping(value = "auth/login")
+    public ResponseEntity login(@RequestBody User user){
+        Map response = new HashMap();
+        try{
+            return  new ResponseEntity(userServiceImp.login(user), HttpStatus.OK);
+        }catch (Exception e){
+            response.put("status", "404");
+            response.put("message", e.getMessage());
+            return new ResponseEntity(response, HttpStatus.NOT_FOUND);
+
+        }
     }
 }
