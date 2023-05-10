@@ -59,7 +59,7 @@ public class UserController {
         return new ResponseEntity(apiResponse, HttpStatus.BAD_REQUEST);
     }
     @PutMapping(value = "/{id}")
-    public ResponseEntity updateUser(Long id, @RequestBody User user){
+    public ResponseEntity updateUser(@PathVariable Long id, @RequestBody User user){
 
         Boolean userResp = userService.updateUser(id, user);
         if(userResp){
